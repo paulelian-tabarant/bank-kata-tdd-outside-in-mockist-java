@@ -10,7 +10,7 @@ public class AcceptanceTest {
                 14/01/2012 || 100.0 || || 100.0
                 """;
 
-        var commands = new BankAccountCommands();
+        var commands = new BankAccountCommands(new BankAccount());
         commands.deposit(100);
 
         assertThat(commands.statement()).isEqualTo(expectedStatement);
