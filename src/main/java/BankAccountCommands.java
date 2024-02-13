@@ -1,3 +1,5 @@
+import java.time.format.DateTimeFormatter;
+
 public class BankAccountCommands {
     private final BankAccount bankAccount;
     private final Printer printer;
@@ -22,6 +24,12 @@ public class BankAccountCommands {
 
         if (command.equals("statement")) {
             printer.print("date || credit || debit || balance");
+            var transactions = bankAccount.transactions();
+            for (var transaction : transactions) {
+                var transactionStatement = String.format("%s || %s || ||", transaction.c0().format(DateTimeFormatter.ISO_DATE), transaction.i());
+                printer.print(transactionStatement);
+            }
+
             return;
         }
 

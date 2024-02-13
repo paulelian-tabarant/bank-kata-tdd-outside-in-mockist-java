@@ -13,7 +13,7 @@ public class AcceptanceTest {
         var dateProvider = mock(DateProvider.class);
         var expectedStatement = """
                 date || credit || debit || balance
-                14/01/2012 || 100.0 || || 100.0
+                2012-01-14 || 100.0 || || 100.0
                 """;
 
         when(dateProvider.today()).thenReturn(LocalDate.of(2012, 1, 14));

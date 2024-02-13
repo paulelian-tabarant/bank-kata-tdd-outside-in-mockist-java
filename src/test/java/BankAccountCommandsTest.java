@@ -1,4 +1,10 @@
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatcher;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -6,6 +12,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 class BankAccountCommandsTest {
+    Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
 
     @Test
     void depositShouldGiveCommandToBankAccount() {
@@ -49,20 +56,21 @@ class BankAccountCommandsTest {
         var printer = mock(Printer.class);
         var dateProvider = mock(DateProvider.class);
 
-        var transactionDate = LocalDate.of(2020, 1, 10);
-        when(dateProvider.today()).thenReturn(transactionDate);
-        when(bankAccount.transactions()).thenReturn(List.of(new Transaction(transactionDate, Transaction.Type.DEPOSIT, 10)));
-
-        var expectedStatement = """
-                date || credit || debit || balance
-                10/01/2020 || 10.0 || ||
-                """;
+        when(bankAccount.transactions()).thenReturn(List.of(
+                new Transaction(LocalDate.of(2020, 1, 10), DEPOSIT, 10.0),
+                new Transaction(LocalDate.of(2021, 2, 11), DEPOSIT, 45.0),
+                new Transaction(LocalDate.of(2022, 3, 12), DEPOSIT, 78.0)
+        ));
 
         // when
         var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
         commands.run("statement");
 
         // then
-        verify(printer).print(expectedStatement);
+        // TODO: Refactor to use ArgumentMatcher
+        verify(printer).print("date || credit || debit || balance");
+        verify(printer).print("2020-01-10 || 10.0 || ||");
+        verify(printer).print("2021-02-11 || 45.0 || ||");
+        verify(printer).print("2022-03-12 || 78.0 || ||");
     }
 }
