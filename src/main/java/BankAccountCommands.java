@@ -10,6 +10,6 @@ public class BankAccountCommands {
     }
 
     public void deposit(int i) {
-        throw new UnsupportedOperationException("Not implemented");
+        bankAccount.addTransaction(i);
     }
 }
