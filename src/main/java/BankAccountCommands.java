@@ -1,6 +1,8 @@
 import java.time.format.DateTimeFormatter;
 
 public class BankAccountCommands {
+    public static final String STATEMENT = "statement";
+    public static final String DEPOSIT = "deposit";
     private final BankAccount bankAccount;
     private final Printer printer;
     private final DateProvider dateProvider;
@@ -18,11 +20,11 @@ public class BankAccountCommands {
     public void run(String s) {
         String command = s.split(" ")[0];
 
-        if (!(command.equals("type") || command.equals("statement"))) {
+        if (!(command.equals(DEPOSIT) || command.equals(STATEMENT))) {
             throw new UnsupportedOperationException("Not implemented");
         }
 
-        if (command.equals("statement")) {
+        if (command.equals(STATEMENT)) {
             printer.print("date || credit || debit || balance");
             var transactions = bankAccount.transactions();
             for (var transaction : transactions) {

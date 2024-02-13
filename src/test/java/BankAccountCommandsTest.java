@@ -37,7 +37,7 @@ class BankAccountCommandsTest {
         when(dateProvider.today()).thenReturn(transactionDate);
 
         // when
-        commands.run("type 10");
+        commands.run("deposit 10");
 
         // then
         verify(bankAccount).deposit(transactionDate, 10);
