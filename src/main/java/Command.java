@@ -1,5 +1,3 @@
-import java.util.Optional;
-
 import static java.lang.Integer.parseInt;
 
 record Command(String value) {
@@ -11,8 +9,8 @@ record Command(String value) {
         return valueAt(0);
     }
 
-    public Integer argument() {
-        return parseInt(valueAt(1));
+    public Double argument() {
+        return Double.valueOf(valueAt(1));
     }
 
     private String valueAt(int index) {

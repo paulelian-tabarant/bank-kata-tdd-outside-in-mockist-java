@@ -32,7 +32,7 @@ public class BankAccountCommands {
         deposit(amount);
     }
 
-    private void deposit(int amount) {
+    private void deposit(Double amount) {
         account.addDeposit(dateProvider.today(), amount);
     }
 
