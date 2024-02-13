@@ -33,14 +33,14 @@ public class BankAccountCommands {
     }
 
     private void deposit(int amount) {
-        account.deposit(dateProvider.today(), amount);
+        account.addDeposit(dateProvider.today(), amount);
     }
 
     private void printStatement() {
         output.print(STATEMENT_HEADER);
 
         var balance = 0.0;
-        for (var transaction : account.transactions()) {
+        for (var transaction : account.listTransactions()) {
             balance += transaction.amount();
             output.print(statementLine(transaction, balance));
         }

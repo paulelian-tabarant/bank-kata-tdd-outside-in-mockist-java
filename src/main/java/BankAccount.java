@@ -8,11 +8,11 @@ public class BankAccount {
         this.transactionsStorage = transactionsStorage;
     }
 
-    public void deposit(LocalDate localDate, int amount) {
+    public void addDeposit(LocalDate localDate, double amount) {
         transactionsStorage.add(new Transaction(localDate, Transaction.Type.DEPOSIT, amount));
     }
 
-    public List<Transaction> transactions() {
+    public List<Transaction> listTransactions() {
         return transactionsStorage.all();
     }
 }

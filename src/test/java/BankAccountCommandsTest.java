@@ -36,7 +36,7 @@ class BankAccountCommandsTest {
         commands.run("deposit 10");
 
         // then
-        verify(bankAccount).deposit(transactionDate, 10);
+        verify(bankAccount).addDeposit(transactionDate, 10);
     }
 
     @Test
@@ -54,7 +54,7 @@ class BankAccountCommandsTest {
     @Test
     void printsUpdatedBalanceOnEachTransactionLine() {
         // given
-        when(bankAccount.transactions()).thenReturn(List.of(
+        when(bankAccount.listTransactions()).thenReturn(List.of(
                 new Transaction(LocalDate.of(2020, 1, 10), DEPOSIT, 10.0),
                 new Transaction(LocalDate.of(2021, 2, 11), DEPOSIT, 45.0),
                 new Transaction(LocalDate.of(2022, 3, 12), DEPOSIT, 78.0)

@@ -26,7 +26,7 @@ class BankAccountTest {
         var expectedTransaction = new Transaction(januaryFirst2020, Transaction.Type.DEPOSIT, tenEuros);
 
         // when
-        bankAccount.deposit(januaryFirst2020, tenEuros);
+        bankAccount.addDeposit(januaryFirst2020, tenEuros);
 
         // then
         verify(transactionsStorage).add(expectedTransaction);
@@ -43,6 +43,6 @@ class BankAccountTest {
         when(transactionsStorage.all()).thenReturn(storedTransactions);
 
         // when then
-        assertThat(bankAccount.transactions()).isEqualTo(storedTransactions);
+        assertThat(bankAccount.listTransactions()).isEqualTo(storedTransactions);
     }
 }
