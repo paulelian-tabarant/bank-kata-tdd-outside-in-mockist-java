@@ -28,7 +28,7 @@ public class BankAccountCommands {
             return;
         }
 
-        var amount = command.argument().orElseThrow();
+        var amount = command.argument();
         deposit(amount);
     }
 

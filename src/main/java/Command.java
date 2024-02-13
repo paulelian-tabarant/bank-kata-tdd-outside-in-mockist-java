@@ -11,10 +11,8 @@ record Command(String value) {
         return valueAt(0);
     }
 
-    public Optional<Integer> argument() {
-        return value.split(" ").length > 1
-                ? Optional.of(parseInt(valueAt(1)))
-                : Optional.empty();
+    public Integer argument() {
+        return parseInt(valueAt(1));
     }
 
     private String valueAt(int index) {
