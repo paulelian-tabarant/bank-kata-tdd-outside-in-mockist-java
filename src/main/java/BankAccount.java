@@ -8,15 +8,15 @@ public class BankAccount {
         this.transactionsStorage = transactionsStorage;
     }
 
-    public void addDeposit(LocalDate localDate, double amount) {
-        transactionsStorage.add(new Transaction(localDate, Transaction.Type.DEPOSIT, amount));
+    public void addDeposit(LocalDate date, Double amount) {
+        transactionsStorage.add(new Transaction(date, Transaction.Type.DEPOSIT, amount));
+    }
+
+    public void addWithdrawal(LocalDate date, Double amount) {
+        transactionsStorage.add(new Transaction(date, Transaction.Type.WITHDRAWAL, amount));
     }
 
     public List<Transaction> listTransactions() {
         return transactionsStorage.all();
-    }
-
-    public void addWithdrawal(LocalDate transactionDate, double v) {
-        throw new UnsupportedOperationException("Not implemented");
     }
 }

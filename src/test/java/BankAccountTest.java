@@ -19,14 +19,28 @@ class BankAccountTest {
     }
 
     @Test
-    void storesTransaction() {
+    void storesDeposit() {
         // given
         var januaryFirst2020 = LocalDate.of(2020, 1, 1);
-        int tenEuros = 10;
+        double tenEuros = 10.0;
         var expectedTransaction = new Transaction(januaryFirst2020, Transaction.Type.DEPOSIT, tenEuros);
 
         // when
         bankAccount.addDeposit(januaryFirst2020, tenEuros);
+
+        // then
+        verify(transactionsStorage).add(expectedTransaction);
+    }
+
+    @Test
+    void storesWithdrawal() {
+        // given
+        var januaryFirst2020 = LocalDate.of(2020, 1, 1);
+        double tenEuros = 10.0;
+        var expectedTransaction = new Transaction(januaryFirst2020, Transaction.Type.WITHDRAWAL, tenEuros);
+
+        // when
+        bankAccount.addWithdrawal(januaryFirst2020, tenEuros);
 
         // then
         verify(transactionsStorage).add(expectedTransaction);

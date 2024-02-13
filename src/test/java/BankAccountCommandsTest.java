@@ -37,7 +37,7 @@ class BankAccountCommandsTest {
         commands.run("deposit 10");
 
         // then
-        verify(bankAccount).addDeposit(transactionDate, 10);
+        verify(bankAccount).addDeposit(transactionDate, 10.0);
     }
 
     @Test
