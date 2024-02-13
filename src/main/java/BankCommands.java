@@ -1,7 +1,7 @@
 import static java.lang.String.format;
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
-public class BankAccountCommands {
+public class BankCommands {
     public static final String STATEMENT = "statement";
     public static final String DEPOSIT = "deposit";
     public static final String WITHDRAW = "withdraw";
@@ -13,13 +13,13 @@ public class BankAccountCommands {
 
     private final DateProvider dateProvider;
 
-    public BankAccountCommands(BankAccount account, Output output, DateProvider dateProvider) {
+    public BankCommands(BankAccount account, Output output, DateProvider dateProvider) {
         this.account = account;
         this.output = output;
         this.dateProvider = dateProvider;
     }
 
-    public void run(String commandString) {
+    public void handle(String commandString) {
         var command = Command.of(commandString);
 
         if (isUnknown(command)) {

@@ -17,10 +17,10 @@ public class AcceptanceTest {
         when(dateProvider.today()).thenReturn(LocalDate.of(2012, 1, 14));
 
         // when
-        var commands = new BankAccountCommands(bankAccount, output, dateProvider);
-        commands.run("deposit 100");
-        commands.run("withdraw 30.5");
-        commands.run("statement");
+        var commands = new BankCommands(bankAccount, output, dateProvider);
+        commands.handle("deposit 100");
+        commands.handle("withdraw 30.5");
+        commands.handle("statement");
 
         // then
         verify(output).print("date || credit || debit || balance");

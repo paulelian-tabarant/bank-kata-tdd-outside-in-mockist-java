@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class BankAccountCommandsTest {
+class BankCommandsTest {
     private static final Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
     private static final Transaction.Type WITHDRAWAL = Transaction.Type.WITHDRAWAL;
 
@@ -16,7 +16,7 @@ class BankAccountCommandsTest {
     private Output output;
     private DateProvider dateProvider;
 
-    private BankAccountCommands commands;
+    private BankCommands commands;
 
     @BeforeEach
     void setUp() {
@@ -24,7 +24,7 @@ class BankAccountCommandsTest {
         output = mock(Output.class);
         dateProvider = mock(DateProvider.class);
 
-        commands = new BankAccountCommands(bankAccount, output, dateProvider);
+        commands = new BankCommands(bankAccount, output, dateProvider);
     }
 
     @Test
@@ -34,7 +34,7 @@ class BankAccountCommandsTest {
         when(dateProvider.today()).thenReturn(transactionDate);
 
         // when
-        commands.run("deposit 10");
+        commands.handle("deposit 10");
 
         // then
         verify(bankAccount).addDeposit(transactionDate, 10.0);
@@ -47,7 +47,7 @@ class BankAccountCommandsTest {
         when(dateProvider.today()).thenReturn(transactionDate);
 
         // when
-        commands.run("withdraw 20.30");
+        commands.handle("withdraw 20.30");
 
         // then
         verify(bankAccount).addWithdrawal(transactionDate, 20.30);
@@ -59,7 +59,7 @@ class BankAccountCommandsTest {
         var statementHeader = "date || credit || debit || balance";
 
         // when
-        commands.run("statement");
+        commands.handle("statement");
 
         // then
         verify(output).print(statementHeader);
@@ -75,7 +75,7 @@ class BankAccountCommandsTest {
         ));
 
         // when
-        commands.run("statement");
+        commands.handle("statement");
 
         // then
         verify(output).print("2020-01-10 || 10.0 || || 10.0");
