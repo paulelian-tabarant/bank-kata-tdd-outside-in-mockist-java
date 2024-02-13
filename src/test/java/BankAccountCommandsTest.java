@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class BankAccountCommandsTest {
     private final Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
