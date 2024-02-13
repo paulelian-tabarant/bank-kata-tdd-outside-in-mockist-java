@@ -82,4 +82,22 @@ class BankAccountCommandsTest {
         verify(output).print("2021-02-11 || 45.0 || || 55.0");
         verify(output).print("2022-03-12 || 78.0 || || 133.0");
     }
+
+    @Test
+    void printsDepositsAndWithdrawalsWithUpdatedBalance() {
+        // given
+        when(bankAccount.listTransactions()).thenReturn(List.of(
+                new Transaction(LocalDate.of(2020, 1, 10), DEPOSIT, 10.0),
+                new Transaction(LocalDate.of(2021, 2, 11), Transaction.Type.WITHDRAWAL, 45.0),
+                new Transaction(LocalDate.of(2022, 3, 12), DEPOSIT, 78.0)
+        ));
+
+        // when
+        commands.run("statement");
+
+        // then
+        verify(output).print("2020-01-10 || 10.0 || || 10.0");
+        verify(output).print("2021-02-11 || || 45.0 || -35.0");
+        verify(output).print("2022-03-12 || 78.0 || || 43.0");
+    }
 }

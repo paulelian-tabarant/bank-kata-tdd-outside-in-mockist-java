@@ -50,13 +50,16 @@ public class BankAccountCommands {
 
         var balance = 0.0;
         for (var transaction : account.listTransactions()) {
-            balance += transaction.amount();
+            balance += transaction.type() == Transaction.Type.DEPOSIT ? transaction.amount() : -transaction.amount();
             output.print(statementLine(transaction, balance));
         }
     }
 
     private static String statementLine(Transaction transaction, double balance) {
-        return format("%s || %s || || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
+        if (transaction.type() == Transaction.Type.DEPOSIT)
+            return format("%s || %s || || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
+
+        return format("%s || || %s || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
     }
 
     private static boolean isUnknown(Command command) {
