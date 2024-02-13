@@ -9,7 +9,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class BankAccountCommandsTest {
-    private final Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
+    private static final Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
+    private static final Transaction.Type WITHDRAWAL = Transaction.Type.WITHDRAWAL;
 
     private BankAccount bankAccount;
     private Output output;
@@ -69,7 +70,7 @@ class BankAccountCommandsTest {
         // given
         when(bankAccount.listTransactions()).thenReturn(List.of(
                 new Transaction(LocalDate.of(2020, 1, 10), DEPOSIT, 10.0),
-                new Transaction(LocalDate.of(2021, 2, 11), Transaction.Type.WITHDRAWAL, 45.0),
+                new Transaction(LocalDate.of(2021, 2, 11), WITHDRAWAL, 45.0),
                 new Transaction(LocalDate.of(2022, 3, 12), DEPOSIT, 78.0)
         ));
 
