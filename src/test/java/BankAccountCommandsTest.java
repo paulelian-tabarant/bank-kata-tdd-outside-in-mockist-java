@@ -27,7 +27,7 @@ class BankAccountCommandsTest {
     }
 
     @Test
-    void depositShouldGiveCommandToBankAccount() {
+    void givesDepositAmountAndDateToBankAccount() {
         // given
         var transactionDate = LocalDate.of(2020, 1, 10);
         when(dateProvider.today()).thenReturn(transactionDate);
@@ -64,7 +64,7 @@ class BankAccountCommandsTest {
         commands.run("statement");
 
         // then
-        // TODO: Refactor to use ArgumentMatcher
+        // TODO: Might use argument captor for easier comparison
         verify(printer).print("2020-01-10 || 10.0 || ||");
         verify(printer).print("2021-02-11 || 45.0 || ||");
         verify(printer).print("2022-03-12 || 78.0 || ||");
