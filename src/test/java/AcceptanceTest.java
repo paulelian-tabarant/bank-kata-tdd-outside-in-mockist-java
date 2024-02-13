@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -8,6 +9,7 @@ public class AcceptanceTest {
     public void printsBankAccountStatement() {
         // given
         var printer = mock(Printer.class);
+        var dateProvider = mock(DateProvider.class);
         var expectedStatement = """
                 date || credit || debit || balance
                 14/01/2012 || 100.0 || || 100.0
@@ -17,7 +19,7 @@ public class AcceptanceTest {
         var bankAccount = new BankAccount(transactionsStorage);
 
         // when
-        var commands = new BankAccountCommands(bankAccount, printer);
+        var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
         commands.run("deposit 100");
         commands.run("statement");
 

@@ -3,7 +3,7 @@ import java.time.LocalDate;
 public class BankAccountCommands {
     private final BankAccount bankAccount;
 
-    public BankAccountCommands(BankAccount bankAccount, Printer printer) {
+    public BankAccountCommands(BankAccount bankAccount, Printer printer, DateProvider dateProvider) {
         this.bankAccount = bankAccount;
     }
 
