@@ -19,8 +19,8 @@ public class BankCommands {
         this.dateProvider = dateProvider;
     }
 
-    public void handle(String commandString) {
-        var command = Command.of(commandString);
+    public void handle(String input) {
+        var command = Command.of(input);
 
         if (isUnknown(command)) {
             throw new UnsupportedOperationException("Not implemented");
