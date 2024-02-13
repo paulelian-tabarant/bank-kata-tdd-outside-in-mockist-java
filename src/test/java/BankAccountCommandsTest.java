@@ -1,11 +1,5 @@
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,13 +40,13 @@ class BankAccountCommandsTest {
     @Test
     void printsStatementHeader() {
         // given
-        var expectedStatement = "date || credit || debit || balance";
+        var statementHeader = "date || credit || debit || balance";
 
         // when
         commands.run("statement");
 
         // then
-        verify(printer).print(expectedStatement);
+        verify(printer).print(statementHeader);
     }
 
     @Test
@@ -69,7 +63,6 @@ class BankAccountCommandsTest {
 
         // then
         // TODO: Refactor to use ArgumentMatcher
-        verify(printer).print("date || credit || debit || balance");
         verify(printer).print("2020-01-10 || 10.0 || ||");
         verify(printer).print("2021-02-11 || 45.0 || ||");
         verify(printer).print("2022-03-12 || 78.0 || ||");

@@ -1,5 +1,3 @@
-import java.time.format.DateTimeFormatter;
-
 import static java.lang.String.format;
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
@@ -17,10 +15,6 @@ public class BankAccountCommands {
         this.dateProvider = dateProvider;
     }
 
-    public void deposit(int amount) {
-        bankAccount.deposit(dateProvider.today(), amount);
-    }
-
     public void run(String s) {
         String command = s.split(" ")[0];
 
@@ -35,6 +29,10 @@ public class BankAccountCommands {
 
         var amount = Integer.parseInt(s.split(" ")[1]);
         deposit(amount);
+    }
+
+    private void deposit(int amount) {
+        bankAccount.deposit(dateProvider.today(), amount);
     }
 
     private void printStatement() {
