@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class BankAccountCommands {
     private final BankAccount bankAccount;
 
@@ -10,7 +12,7 @@ public class BankAccountCommands {
     }
 
     public void deposit(int amount) {
-        bankAccount.addTransaction(amount);
+        bankAccount.deposit(amount, LocalDate.of(2020, 1, 1));
     }
 
     public void run(String s) {

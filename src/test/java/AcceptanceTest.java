@@ -1,22 +1,27 @@
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class AcceptanceTest {
     @Test
     public void printsBankAccountStatement() {
-        var printer = Mockito.mock(Printer.class);
+        // given
+        var printer = mock(Printer.class);
         var expectedStatement = """
                 date || credit || debit || balance
                 14/01/2012 || 100.0 || || 100.0
                 """;
 
-        var commands = new BankAccountCommands(new BankAccount(), printer);
+        var transactionsStorage = new InMemoryTransactionsStorage();
+        BankAccount bankAccount = new BankAccount(transactionsStorage);
+
+        // when
+        var commands = new BankAccountCommands(bankAccount, printer);
         commands.run("deposit 100");
         commands.run("statement");
 
+        // then
         verify(printer).print(expectedStatement);
     }
 }
