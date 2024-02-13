@@ -50,7 +50,7 @@ public class BankAccountCommands {
 
         var balance = 0.0;
         for (var transaction : account.listTransactions()) {
-            balance += transaction.type() == Transaction.Type.DEPOSIT ? transaction.amount() : -transaction.amount();
+            balance += transaction.balance();
             output.print(statementLine(transaction, balance));
         }
     }
