@@ -1,25 +1,20 @@
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.time.LocalDate;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class AcceptanceTest {
     @Test
     public void printsBankAccountStatement() {
         // given
+        var bankAccount = new BankAccount(new InMemoryTransactionsStorage());
         var printer = mock(Printer.class);
         var dateProvider = mock(DateProvider.class);
-        var expectedStatement = """
-                date || credit || debit || balance
-                2012-01-14 || 100.0 || || 100.0
-                """;
 
         when(dateProvider.today()).thenReturn(LocalDate.of(2012, 1, 14));
-
-        var transactionsStorage = new InMemoryTransactionsStorage();
-        var bankAccount = new BankAccount(transactionsStorage);
 
         // when
         var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
@@ -27,6 +22,7 @@ public class AcceptanceTest {
         commands.run("statement");
 
         // then
-        verify(printer).print(expectedStatement);
+        verify(printer).print("date || credit || debit || balance");
+        verify(printer).print("2012-01-14 || 100.0 || || 100.0");
     }
 }

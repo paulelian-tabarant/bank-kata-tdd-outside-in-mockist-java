@@ -1,5 +1,3 @@
-import java.util.Optional;
-
 import static java.lang.String.format;
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
@@ -9,28 +7,13 @@ public class BankAccountCommands {
     public static final String STATEMENT_HEADER = "date || credit || debit || balance";
     private final BankAccount bankAccount;
     private final Printer printer;
+
     private final DateProvider dateProvider;
 
     public BankAccountCommands(BankAccount bankAccount, Printer printer, DateProvider dateProvider) {
         this.bankAccount = bankAccount;
         this.printer = printer;
         this.dateProvider = dateProvider;
-    }
-
-    record Command(String value) {
-        public static Command of(String value) {
-            return new Command(value);
-        }
-
-        public String name() {
-            return value.split(" ")[0];
-        }
-
-        public Optional<Integer> argument() {
-            return value.split(" ").length > 1
-                    ? Optional.of(Integer.parseInt(value.split(" ")[1]))
-                    : Optional.empty();
-        }
     }
 
     public void run(String commandString) {
