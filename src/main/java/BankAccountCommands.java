@@ -6,6 +6,8 @@ public class BankAccountCommands {
     public static final String DEPOSIT = "deposit";
     public static final String WITHDRAW = "withdraw";
     public static final String STATEMENT_HEADER = "date || credit || debit || balance";
+    public static final String DEPOSIT_LINE_FORMAT = "%s || %s || || %s";
+    public static final String WITHDRAWAL_LINE_FORMAT = "%s || || %s || %s";
     private final BankAccount account;
     private final Output output;
 
@@ -56,10 +58,11 @@ public class BankAccountCommands {
     }
 
     private static String statementLine(Transaction transaction, double balance) {
-        if (transaction.type() == Transaction.Type.DEPOSIT)
-            return format("%s || %s || || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
+        var lineFormat = transaction.type() == Transaction.Type.DEPOSIT
+                ? DEPOSIT_LINE_FORMAT
+                : WITHDRAWAL_LINE_FORMAT;
 
-        return format("%s || || %s || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
+        return format(lineFormat, transaction.date().format(ISO_DATE), transaction.amount(), balance);
     }
 
     private static boolean isUnknown(Command command) {
