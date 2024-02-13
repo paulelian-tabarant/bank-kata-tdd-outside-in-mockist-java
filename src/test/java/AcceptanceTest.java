@@ -25,6 +25,6 @@ public class AcceptanceTest {
         // then
         verify(printer).print("date || credit || debit || balance");
         verify(printer).print("2012-01-14 || 100.0 || || 100.0");
-        verify(printer).print("2012-01-14 || 30.5 || || 69.5");
+        verify(printer).print("2012-01-14 || || 30.5 || 69.5");
     }
 }
