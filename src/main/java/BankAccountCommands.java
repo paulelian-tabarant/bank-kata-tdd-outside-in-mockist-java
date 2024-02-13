@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 import static java.lang.String.format;
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
@@ -15,19 +17,37 @@ public class BankAccountCommands {
         this.dateProvider = dateProvider;
     }
 
-    public void run(String s) {
-        String command = s.split(" ")[0];
+    record Command(String value) {
+        public static Command of(String value) {
+            return new Command(value);
+        }
 
-        if (!(command.equals(DEPOSIT) || command.equals(STATEMENT))) {
+        public String name() {
+            return value.split(" ")[0];
+        }
+
+        public Optional<Integer> argument() {
+            return value.split(" ").length > 1
+                    ? Optional.of(Integer.parseInt(value.split(" ")[1]))
+                    : Optional.empty();
+        }
+    }
+
+    public void run(String commandString) {
+        var command = Command.of(commandString);
+
+        var name = command.name();
+
+        if (!(name.equals(DEPOSIT) || name.equals(STATEMENT))) {
             throw new UnsupportedOperationException("Not implemented");
         }
 
-        if (command.equals(STATEMENT)) {
+        if (name.equals(STATEMENT)) {
             printStatement();
             return;
         }
 
-        var amount = Integer.parseInt(s.split(" ")[1]);
+        var amount = command.argument().orElseThrow();
         deposit(amount);
     }
 
