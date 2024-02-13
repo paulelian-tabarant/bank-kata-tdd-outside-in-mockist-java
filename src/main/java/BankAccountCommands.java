@@ -19,7 +19,7 @@ public class BankAccountCommands {
     public void run(String commandString) {
         var command = Command.of(commandString);
 
-        if (isUnknownOperation(command)) {
+        if (isUnknown(command)) {
             throw new UnsupportedOperationException("Not implemented");
         }
 
@@ -30,10 +30,6 @@ public class BankAccountCommands {
 
         var amount = command.argument().orElseThrow();
         deposit(amount);
-    }
-
-    private static boolean isUnknownOperation(Command command) {
-        return !(command.name().equals(DEPOSIT) || command.name().equals(STATEMENT));
     }
 
     private void deposit(int amount) {
@@ -52,5 +48,9 @@ public class BankAccountCommands {
 
     private static String statementLine(Transaction transaction, double balance) {
         return format("%s || %s || || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
+    }
+
+    private static boolean isUnknown(Command command) {
+        return !(command.is(DEPOSIT) || command.is(STATEMENT));
     }
 }
