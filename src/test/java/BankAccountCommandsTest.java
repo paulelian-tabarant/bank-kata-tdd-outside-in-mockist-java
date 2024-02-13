@@ -1,4 +1,5 @@
 import net.bytebuddy.asm.Advice;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
@@ -12,21 +13,31 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 class BankAccountCommandsTest {
-    Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
+    private final Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
+
+    private BankAccount bankAccount;
+    private Printer printer;
+    private DateProvider dateProvider;
+
+    private BankAccountCommands commands;
+
+    @BeforeEach
+    void setUp() {
+        bankAccount = mock(BankAccount.class);
+        printer = mock(Printer.class);
+        dateProvider = mock(DateProvider.class);
+
+        commands = new BankAccountCommands(bankAccount, printer, dateProvider);
+    }
 
     @Test
     void depositShouldGiveCommandToBankAccount() {
         // given
-        var bankAccount = mock(BankAccount.class);
-        var printer = mock(Printer.class);
-        var dateProvider = mock(DateProvider.class);
-
         var transactionDate = LocalDate.of(2020, 1, 10);
         when(dateProvider.today()).thenReturn(transactionDate);
 
         // when
-        var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
-        commands.run("deposit 10");
+        commands.run("type 10");
 
         // then
         verify(bankAccount).deposit(transactionDate, 10);
@@ -35,14 +46,9 @@ class BankAccountCommandsTest {
     @Test
     void printsStatementHeader() {
         // given
-        var bankAccount = mock(BankAccount.class);
-        var printer = mock(Printer.class);
-        var dateProvider = mock(DateProvider.class);
-
         var expectedStatement = "date || credit || debit || balance";
 
         // when
-        var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
         commands.run("statement");
 
         // then
@@ -52,10 +58,6 @@ class BankAccountCommandsTest {
     @Test
     void printsDepositTransactionsCorrectly() {
         // given
-        var bankAccount = mock(BankAccount.class);
-        var printer = mock(Printer.class);
-        var dateProvider = mock(DateProvider.class);
-
         when(bankAccount.transactions()).thenReturn(List.of(
                 new Transaction(LocalDate.of(2020, 1, 10), DEPOSIT, 10.0),
                 new Transaction(LocalDate.of(2021, 2, 11), DEPOSIT, 45.0),
@@ -63,7 +65,6 @@ class BankAccountCommandsTest {
         ));
 
         // when
-        var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
         commands.run("statement");
 
         // then

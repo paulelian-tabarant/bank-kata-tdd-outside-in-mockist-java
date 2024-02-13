@@ -23,7 +23,7 @@ public class AcceptanceTest {
 
         // when
         var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
-        commands.run("deposit 100");
+        commands.run("type 100");
         commands.run("statement");
 
         // then

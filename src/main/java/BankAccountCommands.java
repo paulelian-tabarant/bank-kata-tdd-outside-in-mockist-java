@@ -18,7 +18,7 @@ public class BankAccountCommands {
     public void run(String s) {
         String command = s.split(" ")[0];
 
-        if (!(command.equals("deposit") || command.equals("statement"))) {
+        if (!(command.equals("type") || command.equals("statement"))) {
             throw new UnsupportedOperationException("Not implemented");
         }
 
@@ -26,7 +26,7 @@ public class BankAccountCommands {
             printer.print("date || credit || debit || balance");
             var transactions = bankAccount.transactions();
             for (var transaction : transactions) {
-                var transactionStatement = String.format("%s || %s || ||", transaction.c0().format(DateTimeFormatter.ISO_DATE), transaction.i());
+                var transactionStatement = String.format("%s || %s || ||", transaction.date().format(DateTimeFormatter.ISO_DATE), transaction.amount());
                 printer.print(transactionStatement);
             }
 

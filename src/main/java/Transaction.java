@@ -1,5 +1,5 @@
 import java.time.LocalDate;
 
-public record Transaction(LocalDate c0, Type deposit, double i) {
+public record Transaction(LocalDate date, Type type, double amount) {
     public enum Type { DEPOSIT }
 }
