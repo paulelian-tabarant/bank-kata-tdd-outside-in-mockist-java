@@ -9,6 +9,6 @@ public class BankAccount {
     }
 
     public void deposit(int i, LocalDate localDate) {
-        throw new UnsupportedOperationException("Not implemented");
+        transactionsStorage.add(new Transaction(localDate, Transaction.Type.DEPOSIT, i));
     }
 }

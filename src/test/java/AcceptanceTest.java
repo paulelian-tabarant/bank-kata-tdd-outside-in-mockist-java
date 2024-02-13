@@ -14,7 +14,7 @@ public class AcceptanceTest {
                 """;
 
         var transactionsStorage = new InMemoryTransactionsStorage();
-        BankAccount bankAccount = new BankAccount(transactionsStorage);
+        var bankAccount = new BankAccount(transactionsStorage);
 
         // when
         var commands = new BankAccountCommands(bankAccount, printer);
