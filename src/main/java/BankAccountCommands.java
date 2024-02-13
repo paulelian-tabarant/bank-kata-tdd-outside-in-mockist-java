@@ -66,6 +66,6 @@ public class BankAccountCommands {
     }
 
     private static boolean isUnknown(Command command) {
-        return !(command.is(DEPOSIT) || command.is(STATEMENT) || command.is("withdraw"));
+        return !(command.is(DEPOSIT) || command.is(STATEMENT) || command.is(WITHDRAW));
     }
 }

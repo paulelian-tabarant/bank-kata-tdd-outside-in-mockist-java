@@ -11,20 +11,20 @@ public class AcceptanceTest {
     public void printsBankAccountStatement() {
         // given
         var bankAccount = new BankAccount(new InMemoryTransactionsStorage());
-        var printer = mock(Output.class);
+        var output = mock(Output.class);
         var dateProvider = mock(DateProvider.class);
 
         when(dateProvider.today()).thenReturn(LocalDate.of(2012, 1, 14));
 
         // when
-        var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
+        var commands = new BankAccountCommands(bankAccount, output, dateProvider);
         commands.run("deposit 100");
         commands.run("withdraw 30.5");
         commands.run("statement");
 
         // then
-        verify(printer).print("date || credit || debit || balance");
-        verify(printer).print("2012-01-14 || 100.0 || || 100.0");
-        verify(printer).print("2012-01-14 || || 30.5 || 69.5");
+        verify(output).print("date || credit || debit || balance");
+        verify(output).print("2012-01-14 || 100.0 || || 100.0");
+        verify(output).print("2012-01-14 || || 30.5 || 69.5");
     }
 }
