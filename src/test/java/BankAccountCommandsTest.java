@@ -23,4 +23,21 @@ class BankAccountCommandsTest {
         // then
         verify(bankAccount).deposit(transactionDate, 10);
     }
+
+    @Test
+    void printsStatementHeader() {
+        // given
+        var bankAccount = mock(BankAccount.class);
+        var printer = mock(Printer.class);
+        var dateProvider = mock(DateProvider.class);
+
+        var expectedStatement = "date || credit || debit || balance";
+
+        // when
+        var commands = new BankAccountCommands(bankAccount, printer, dateProvider);
+        commands.run("statement");
+
+        // then
+        verify(printer).print(expectedStatement);
+    }
 }
