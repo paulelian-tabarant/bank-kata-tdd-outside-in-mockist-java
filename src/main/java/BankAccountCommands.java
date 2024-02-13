@@ -1,8 +1,12 @@
 import java.time.format.DateTimeFormatter;
 
+import static java.lang.String.format;
+import static java.time.format.DateTimeFormatter.ISO_DATE;
+
 public class BankAccountCommands {
     public static final String STATEMENT = "statement";
     public static final String DEPOSIT = "deposit";
+    public static final String STATEMENT_HEADER = "date || credit || debit || balance";
     private final BankAccount bankAccount;
     private final Printer printer;
     private final DateProvider dateProvider;
@@ -25,17 +29,23 @@ public class BankAccountCommands {
         }
 
         if (command.equals(STATEMENT)) {
-            printer.print("date || credit || debit || balance");
-            var transactions = bankAccount.transactions();
-            for (var transaction : transactions) {
-                var transactionStatement = String.format("%s || %s || ||", transaction.date().format(DateTimeFormatter.ISO_DATE), transaction.amount());
-                printer.print(transactionStatement);
-            }
-
+            printStatement();
             return;
         }
 
         var amount = Integer.parseInt(s.split(" ")[1]);
         deposit(amount);
+    }
+
+    private void printStatement() {
+        printer.print(STATEMENT_HEADER);
+
+        for (var transaction : bankAccount.transactions()) {
+            printer.print(formatted(transaction));
+        }
+    }
+
+    private static String formatted(Transaction transaction) {
+        return format("%s || %s || ||", transaction.date().format(ISO_DATE), transaction.amount());
     }
 }
