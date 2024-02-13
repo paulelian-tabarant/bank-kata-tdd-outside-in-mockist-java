@@ -12,7 +12,7 @@ class BankAccountCommandsTest {
     private final Transaction.Type DEPOSIT = Transaction.Type.DEPOSIT;
 
     private BankAccount bankAccount;
-    private Printer printer;
+    private Output output;
     private DateProvider dateProvider;
 
     private BankAccountCommands commands;
@@ -20,10 +20,10 @@ class BankAccountCommandsTest {
     @BeforeEach
     void setUp() {
         bankAccount = mock(BankAccount.class);
-        printer = mock(Printer.class);
+        output = mock(Output.class);
         dateProvider = mock(DateProvider.class);
 
-        commands = new BankAccountCommands(bankAccount, printer, dateProvider);
+        commands = new BankAccountCommands(bankAccount, output, dateProvider);
     }
 
     @Test
@@ -48,7 +48,7 @@ class BankAccountCommandsTest {
         commands.run("statement");
 
         // then
-        verify(printer).print(statementHeader);
+        verify(output).print(statementHeader);
     }
 
     @Test
@@ -65,8 +65,8 @@ class BankAccountCommandsTest {
 
         // then
         // TODO: Might use argument captor for easier comparison
-        verify(printer).print("2020-01-10 || 10.0 || || 10.0");
-        verify(printer).print("2021-02-11 || 45.0 || || 55.0");
-        verify(printer).print("2022-03-12 || 78.0 || || 133.0");
+        verify(output).print("2020-01-10 || 10.0 || || 10.0");
+        verify(output).print("2021-02-11 || 45.0 || || 55.0");
+        verify(output).print("2022-03-12 || 78.0 || || 133.0");
     }
 }

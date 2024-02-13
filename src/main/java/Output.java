@@ -1,3 +1,3 @@
-public interface Printer {
+public interface Output {
     void print(String expectedStatement);
 }

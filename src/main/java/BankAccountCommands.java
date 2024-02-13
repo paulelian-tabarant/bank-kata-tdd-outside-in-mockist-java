@@ -5,27 +5,25 @@ public class BankAccountCommands {
     public static final String STATEMENT = "statement";
     public static final String DEPOSIT = "deposit";
     public static final String STATEMENT_HEADER = "date || credit || debit || balance";
-    private final BankAccount bankAccount;
-    private final Printer printer;
+    private final BankAccount account;
+    private final Output output;
 
     private final DateProvider dateProvider;
 
-    public BankAccountCommands(BankAccount bankAccount, Printer printer, DateProvider dateProvider) {
-        this.bankAccount = bankAccount;
-        this.printer = printer;
+    public BankAccountCommands(BankAccount account, Output output, DateProvider dateProvider) {
+        this.account = account;
+        this.output = output;
         this.dateProvider = dateProvider;
     }
 
     public void run(String commandString) {
         var command = Command.of(commandString);
 
-        var name = command.name();
-
-        if (!(name.equals(DEPOSIT) || name.equals(STATEMENT))) {
+        if (isUnknownOperation(command)) {
             throw new UnsupportedOperationException("Not implemented");
         }
 
-        if (name.equals(STATEMENT)) {
+        if (command.is(STATEMENT)) {
             printStatement();
             return;
         }
@@ -34,21 +32,25 @@ public class BankAccountCommands {
         deposit(amount);
     }
 
+    private static boolean isUnknownOperation(Command command) {
+        return !(command.name().equals(DEPOSIT) || command.name().equals(STATEMENT));
+    }
+
     private void deposit(int amount) {
-        bankAccount.deposit(dateProvider.today(), amount);
+        account.deposit(dateProvider.today(), amount);
     }
 
     private void printStatement() {
-        printer.print(STATEMENT_HEADER);
+        output.print(STATEMENT_HEADER);
 
         var balance = 0.0;
-        for (var transaction : bankAccount.transactions()) {
+        for (var transaction : account.transactions()) {
             balance += transaction.amount();
-            printer.print(formatted(transaction, balance));
+            output.print(statementLine(transaction, balance));
         }
     }
 
-    private static String formatted(Transaction transaction, double balance) {
+    private static String statementLine(Transaction transaction, double balance) {
         return format("%s || %s || || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
     }
 }

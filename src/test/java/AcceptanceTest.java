@@ -11,7 +11,7 @@ public class AcceptanceTest {
     public void printsBankAccountStatement() {
         // given
         var bankAccount = new BankAccount(new InMemoryTransactionsStorage());
-        var printer = mock(Printer.class);
+        var printer = mock(Output.class);
         var dateProvider = mock(DateProvider.class);
 
         when(dateProvider.today()).thenReturn(LocalDate.of(2012, 1, 14));

@@ -20,4 +20,8 @@ record Command(String value) {
     private String valueAt(int index) {
         return value.split(" ")[index];
     }
+
+    public boolean is(String name) {
+        return name().equals(name);
+    }
 }
