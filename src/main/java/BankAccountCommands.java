@@ -41,12 +41,14 @@ public class BankAccountCommands {
     private void printStatement() {
         printer.print(STATEMENT_HEADER);
 
+        var balance = 0.0;
         for (var transaction : bankAccount.transactions()) {
-            printer.print(formatted(transaction));
+            balance += transaction.amount();
+            printer.print(formatted(transaction, balance));
         }
     }
 
-    private static String formatted(Transaction transaction) {
-        return format("%s || %s || ||", transaction.date().format(ISO_DATE), transaction.amount());
+    private static String formatted(Transaction transaction, double balance) {
+        return format("%s || %s || || %s", transaction.date().format(ISO_DATE), transaction.amount(), balance);
     }
 }

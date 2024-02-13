@@ -52,7 +52,7 @@ class BankAccountCommandsTest {
     }
 
     @Test
-    void printsDepositTransactionsCorrectly() {
+    void printsUpdatedBalanceOnEachTransactionLine() {
         // given
         when(bankAccount.transactions()).thenReturn(List.of(
                 new Transaction(LocalDate.of(2020, 1, 10), DEPOSIT, 10.0),
@@ -65,8 +65,8 @@ class BankAccountCommandsTest {
 
         // then
         // TODO: Might use argument captor for easier comparison
-        verify(printer).print("2020-01-10 || 10.0 || ||");
-        verify(printer).print("2021-02-11 || 45.0 || ||");
-        verify(printer).print("2022-03-12 || 78.0 || ||");
+        verify(printer).print("2020-01-10 || 10.0 || || 10.0");
+        verify(printer).print("2021-02-11 || 45.0 || || 55.0");
+        verify(printer).print("2022-03-12 || 78.0 || || 133.0");
     }
 }
