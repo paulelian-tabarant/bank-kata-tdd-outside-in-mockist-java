@@ -13,7 +13,7 @@ public class BankCommands {
 
     private final DateProvider dateProvider;
 
-    public BankCommands(BankAccount account, Output output, DateProvider dateProvider) {
+    public BankCommands(BankAccount account, DateProvider dateProvider, Output output) {
         this.account = account;
         this.output = output;
         this.dateProvider = dateProvider;

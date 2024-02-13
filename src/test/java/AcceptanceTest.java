@@ -17,7 +17,7 @@ public class AcceptanceTest {
         when(dateProvider.today()).thenReturn(LocalDate.of(2012, 1, 14));
 
         // when
-        var commands = new BankCommands(bankAccount, output, dateProvider);
+        var commands = new BankCommands(bankAccount, dateProvider, output);
         commands.handle("deposit 100");
         commands.handle("withdraw 30.5");
         commands.handle("statement");

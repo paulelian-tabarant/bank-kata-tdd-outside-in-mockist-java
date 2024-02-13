@@ -24,7 +24,7 @@ class BankCommandsTest {
         output = mock(Output.class);
         dateProvider = mock(DateProvider.class);
 
-        commands = new BankCommands(bankAccount, output, dateProvider);
+        commands = new BankCommands(bankAccount, dateProvider, output);
     }
 
     @Test
