@@ -16,6 +16,9 @@ public class BankAccountCommands {
     }
 
     public void run(String s) {
+        if (!s.split(" ")[0].equals("deposit")) {
+            throw new UnsupportedOperationException("Not implemented");
+        }
         var amount = Integer.parseInt(s.split(" ")[1]);
         deposit(amount);
     }
