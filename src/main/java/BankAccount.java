@@ -8,7 +8,7 @@ public class BankAccount {
         this.transactionsStorage = transactionsStorage;
     }
 
-    public void deposit(int i, LocalDate localDate) {
+    public void deposit(LocalDate localDate, int i) {
         transactionsStorage.add(new Transaction(localDate, Transaction.Type.DEPOSIT, i));
     }
 }

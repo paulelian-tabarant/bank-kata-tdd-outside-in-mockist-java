@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.time.LocalDate;
 
@@ -19,7 +18,7 @@ class BankAccountTest {
 
         // when
         var bankAccount = new BankAccount(transactionsStorage);
-        bankAccount.deposit(depositAmount, transactionDate);
+        bankAccount.deposit(transactionDate, depositAmount);
 
         // then
         verify(transactionsStorage).add(tenEurosDepositAtDate);

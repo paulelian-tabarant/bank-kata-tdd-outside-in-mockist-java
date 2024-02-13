@@ -1,10 +1,10 @@
-import java.time.LocalDate;
-
 public class BankAccountCommands {
     private final BankAccount bankAccount;
+    private final DateProvider dateProvider;
 
     public BankAccountCommands(BankAccount bankAccount, Printer printer, DateProvider dateProvider) {
         this.bankAccount = bankAccount;
+        this.dateProvider = dateProvider;
     }
 
     public String statement() {
@@ -12,7 +12,7 @@ public class BankAccountCommands {
     }
 
     public void deposit(int amount) {
-        bankAccount.deposit(amount, LocalDate.of(2020, 1, 1));
+        bankAccount.deposit(dateProvider.today(), amount);
     }
 
     public void run(String s) {
