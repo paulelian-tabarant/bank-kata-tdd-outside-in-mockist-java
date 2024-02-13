@@ -4,6 +4,7 @@ import static java.time.format.DateTimeFormatter.ISO_DATE;
 public class BankAccountCommands {
     public static final String STATEMENT = "statement";
     public static final String DEPOSIT = "deposit";
+    public static final String WITHDRAW = "withdraw";
     public static final String STATEMENT_HEADER = "date || credit || debit || balance";
     private final BankAccount account;
     private final Output output;
@@ -28,8 +29,16 @@ public class BankAccountCommands {
             return;
         }
 
-        var amount = command.argument();
-        deposit(amount);
+        if (command.is(WITHDRAW)) {
+            withdraw(command.argument());
+            return;
+        }
+
+        deposit(command.argument());
+    }
+
+    private void withdraw(Double amount) {
+        account.addWithdrawal(dateProvider.today(), amount);
     }
 
     private void deposit(Double amount) {
@@ -51,6 +60,6 @@ public class BankAccountCommands {
     }
 
     private static boolean isUnknown(Command command) {
-        return !(command.is(DEPOSIT) || command.is(STATEMENT));
+        return !(command.is(DEPOSIT) || command.is(STATEMENT) || command.is("withdraw"));
     }
 }

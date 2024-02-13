@@ -15,4 +15,8 @@ public class BankAccount {
     public List<Transaction> listTransactions() {
         return transactionsStorage.all();
     }
+
+    public void addWithdrawal(LocalDate transactionDate, double v) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 }

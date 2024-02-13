@@ -40,6 +40,19 @@ class BankAccountCommandsTest {
     }
 
     @Test
+    void givesWithdrawalAmountAndDateToBankAccount() {
+        // given
+        var transactionDate = LocalDate.of(2020, 1, 10);
+        when(dateProvider.today()).thenReturn(transactionDate);
+
+        // when
+        commands.run("withdraw 20.30");
+
+        // then
+        verify(bankAccount).addWithdrawal(transactionDate, 20.30);
+    }
+
+    @Test
     void printsStatementHeader() {
         // given
         var statementHeader = "date || credit || debit || balance";
