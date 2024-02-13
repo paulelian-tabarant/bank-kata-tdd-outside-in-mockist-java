@@ -8,4 +8,9 @@ public class InMemoryTransactionsStorage implements TransactionsStorage {
     public void add(Transaction transaction) {
         transactions.add(transaction);
     }
+
+    @Override
+    public List<Transaction> all() {
+        return transactions;
+    }
 }

@@ -13,6 +13,6 @@ public class BankAccount {
     }
 
     public List<Transaction> transactions() {
-        throw new UnsupportedOperationException("Not implemented");
+        return transactionsStorage.all();
     }
 }
